@@ -2,10 +2,6 @@
 //
 
 #include "stdafx.h" // Header yang dibuat oleh programmer
-#include <stdio.h>
-#include <stdlib.h>
-#include <glut.h> // Header yang tidak dibuat oleh programmer
-#include <math.h>
 
 typedef struct point2D_i
 {
@@ -132,26 +128,26 @@ typedef struct colorARGB_d {
 
 typedef struct object3D_i {
 	int numberOfVertices;
-	point3D_i point[2000];
-	colorARGB_i color[2000];
+	point3D_i point[20000];
+	colorARGB_i color[20000];
 	int numberOfFaces;
-	face_t face[2000];
+	face_t face[20000];
 };
 
 typedef struct object3D_f {
 	int numberOfVertices;
-	point3D_f point[2000];
-	colorARGB_f color[2000];
+	point3D_f point[25000];
+	colorARGB_f color[25000];
 	int numberOfFaces;
-	face_t face[2000];
+	face_t face[25000];
 };
 
 typedef struct object3D_d {
 	int numberOfVertices;
-	point3D_d point[2000];
-	colorARGB_d color[2000];
+	point3D_d point[20000];
+	colorARGB_d color[20000];
 	int numberOfFaces;
-	face_t face[2000];
+	face_t face[20000];
 };
 
 static object3D_f obyek3D;
@@ -2280,10 +2276,10 @@ void draw() {
 
 	static float theta = 0;
 	matrix2D_f tilting = matrixXmatrix(rotationMatrixX(theta), rotationMatrixY(theta));
-	tilting = matrixXmatrix(tilting, rotationMatrixZ(theta));
-	vector3D_f vector[2000];
-	point2D_f point2D[2000];
-	colorARGB_f colorf[2000];
+	tilting = matrixXmatrix(tilting, rotationMatrixZ(15));
+	vector3D_f vector[25000];
+	point2D_f point2D[25000];
+	colorARGB_f colorf[25000];
 
 	for (int i = 0; i < obyek3D.numberOfVertices; i++) { 
 		vector2D_f vectorBuff;
@@ -2343,11 +2339,12 @@ int main(int iArgc, char** cppArgv) {
 
 	int maxVertices, maxFaces;
 
-	int nol = 1;
+	int isValid = 1;
+	int nol = 0;
 	int nos = 0;
-	int now = 0, nov, nof;
+	int now = 0;
 
-	errno_t err = fopen_s(&file, "G:/Materi Semester 5/Grafika Komputer/limas.off", "r");
+	errno_t err = fopen_s(&file, "G:/Materi Semester 5/Grafika Komputer/off14/off14/20.off", "r");
 
 	if (err != 0)
 		printf("File was not opened\n");
@@ -2355,22 +2352,26 @@ int main(int iArgc, char** cppArgv) {
 		while (1) {
 			char c = fgetc(file);
 
-			if (feof(file)) {
+			if (feof(file) || isValid == 0) {
 				break;
 			}
 
-			switch (c) {
-			case ' ':
+			if (c == ' ' || c == '\n') {
 				if (now > 0) {
 					for (int i = now; i < 1000; i++)
 						word[i] = NULL;
 
 					float val = atof(word);
 
-					if (nol == 2) {
+					if (nol == 1) {
 						if (nos == 0) {
 							maxVertices = (int)val;
 							obyek3D.numberOfVertices = maxVertices;
+
+							if (maxVertices >= 25000)
+							{
+								isValid = 0;
+							}
 
 							printf("%d ", obyek3D.numberOfVertices);
 						}
@@ -2378,80 +2379,70 @@ int main(int iArgc, char** cppArgv) {
 							maxFaces = (int)val;
 							obyek3D.numberOfFaces = maxFaces;
 
+							if (maxFaces >= 25000)
+							{
+								isValid = 0;
+							}
+
 							printf("%d ", obyek3D.numberOfFaces);
 						}
 					}
-					else if ((nol - 2) <= maxVertices) {
+					else if ((nol - 1) <= maxVertices) {
 						if (nos == 0) {
-							obyek3D.point[(nol - 3)].x = val;
-							printf("%f ", obyek3D.point[(nol - 3)].x);
+							obyek3D.point[(nol - 2)].x = val;
+							printf("%f ", obyek3D.point[(nol - 2)].x);
 						}
 						else if (nos == 1) {
-							obyek3D.point[(nol - 3)].y = val;
-							printf("%f ", obyek3D.point[(nol - 3)].y);
+							obyek3D.point[(nol - 2)].y = val;
+							printf("%f ", obyek3D.point[(nol - 2)].y);
 						}
 						else if (nos == 2) {
-							obyek3D.point[(nol - 3)].z = val;
-							printf("%f ", obyek3D.point[(nol - 3)].z);
+							obyek3D.point[(nol - 2)].z = val;
+							printf("%f ", obyek3D.point[(nol - 2)].z);
 						}
 						else if (nos == 3) {
-							obyek3D.color[(nol - 3)].r = (val / 255);
-							printf("%f ", obyek3D.color[(nol - 3)].r);
+							obyek3D.color[(nol - 2)].r = (val / 255);
+							printf("%f ", obyek3D.color[(nol - 2)].r);
 						}
 						else if (nos == 4) {
-							obyek3D.color[(nol - 3)].g = (val / 255);
-							printf("%f ", obyek3D.color[(nol - 3)].g);
+							obyek3D.color[(nol - 2)].g = (val / 255);
+							printf("%f ", obyek3D.color[(nol - 2)].g);
 						}
 						else if (nos == 5) {
-							obyek3D.color[(nol - 3)].b = (val / 255);
-							printf("%f ", obyek3D.color[(nol - 3)].b);
+							obyek3D.color[(nol - 2)].b = (val / 255);
+							printf("%f ", obyek3D.color[(nol - 2)].b);
 						}
 						else if (nos == 6) {
-							obyek3D.color[(nol - 3)].a = (val / 255);
-							printf("%f ", obyek3D.color[(nol - 3)].a);
+							obyek3D.color[(nol - 2)].a = (val / 255);
+							printf("%f ", obyek3D.color[(nol - 2)].a);
 						}
 					}
-					else if ((nol - (maxVertices + 2)) <= maxFaces) {
+					else if ((nol - (maxVertices + 1)) <= maxFaces) {
 						if (nos == 0) {
-							obyek3D.face[(nol - (maxVertices + 3))].numberOfVertices = (int)val;
-							printf("%d ", obyek3D.face[(nol - (maxVertices + 3))].numberOfVertices);
+							obyek3D.face[(nol - (maxVertices + 2))].numberOfVertices = (int)val;
+							printf("%d ", obyek3D.face[(nol - (maxVertices + 2))].numberOfVertices);
 						}
 						else if (nos > 0) {
-							obyek3D.face[(nol - (maxVertices + 3))].point[(nos - 1)] = val;
-							printf("%d ", obyek3D.face[(nol - (maxVertices + 3))].point[(nos - 1)]);
+							obyek3D.face[(nol - (maxVertices + 2))].point[(nos - 1)] = val;
+							printf("%d ", obyek3D.face[(nol - (maxVertices + 2))].point[(nos - 1)]);
 						}
 					}
 				}
 
-				now = 0;
-				nos++;
-
-				break;
-			case '\n':
-				if (now > 0) {
-					for (int i = now; i < 1000; i++)
-						word[i] = NULL;
-
-					float val = atof(word);
-
-					if ((nol - 2) > maxVertices && (nol - (maxVertices + 2)) <= maxFaces) {
-						if (nos > 0) {
-							obyek3D.face[(nol - (maxVertices + 3))].point[(nos - 1)] = val;
-							printf("%d ", obyek3D.face[(nol - (maxVertices + 3))].point[(nos - 1)]);
-						}
-					}
+				if (c == ' ') {
+					now = 0;
+					nos++;
 				}
+				else if (c == '\n') {
+					printf("\n");
 
-				printf("\n");
-
-				now = 0;
-				nos = 0;
-				nol++;
-
-				break;
-			default:
+					now = 0;
+					nos = 0;
+					nol++;
+				}
+			} else {
 				switch (nol) {
-				case 1:
+				case 0:
 					printf("%c", c);
 					break;
 				default:
@@ -2459,30 +2450,34 @@ int main(int iArgc, char** cppArgv) {
 					now++;
 					break;
 				}
-
-				break;
 			}
 		}
 
 		fclose(file);
 	}
 
-	for (int i = 0; i < obyek3D.numberOfVertices; i++) {
-		obyek3D.point[i].x *= 100;
-		obyek3D.point[i].y *= 100;
-		obyek3D.point[i].z *= 100;
+	if (isValid) {
+		for (int i = 0; i < obyek3D.numberOfVertices; i++) {
+			obyek3D.point[i].x *= 100;
+			obyek3D.point[i].y *= 100;
+			obyek3D.point[i].z *= 100;
+		}
+
+		glutInit(&iArgc, cppArgv); // Initialize glut library
+		glutInitWindowSize(720, 720); // Initialize application window size
+		glutInitWindowPosition(100, 100); // Initialize application window location (0, 0) is define at up-left
+		glutCreateWindow("2110151023 - Faza Zulfika Permana Putra"); // Create initialized application window with title
+
+		initialize();
+
+		glutDisplayFunc(draw);
+		glutTimerFunc(1, timer, 0);
+		glutMainLoop();
+	} else {
+		printf("\n\n");
+		printf("Tidak dapat ditampilkan, karena melebihi memori yang disediakan");
+		printf("\n\n");
 	}
-
-	glutInit(&iArgc, cppArgv); // Initialize glut library
-	glutInitWindowSize(720, 720); // Initialize application window size
-	glutInitWindowPosition(100, 100); // Initialize application window location (0, 0) is define at up-left
-	glutCreateWindow("2110151023 - Faza Zulfika Permana Putra"); // Create initialized application window with title
-
-	initialize();
-	
-	glutDisplayFunc(draw);
-	glutTimerFunc(1, timer, 0);
-	glutMainLoop();
 
 	return 0;
 }

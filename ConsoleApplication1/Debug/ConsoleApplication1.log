@@ -1,31 +1,29 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (ConsoleApplication1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   PrimitiveDrawing.cpp
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(14): warning C4091: 'typedef ': ignored on left of 'point2D_i' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(19): warning C4091: 'typedef ': ignored on left of 'point2D_f' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(24): warning C4091: 'typedef ': ignored on left of 'point2D_d' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(30): warning C4091: 'typedef ': ignored on left of 'point3D_i' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(36): warning C4091: 'typedef ': ignored on left of 'point3D_f' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(42): warning C4091: 'typedef ': ignored on left of 'point3D_d' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(47): warning C4091: 'typedef ': ignored on left of 'face_t' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(52): warning C4091: 'typedef ': ignored on left of 'vector2D_i' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(57): warning C4091: 'typedef ': ignored on left of 'vector2D_f' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(62): warning C4091: 'typedef ': ignored on left of 'vector2D_d' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(67): warning C4091: 'typedef ': ignored on left of 'vector3D_i' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(72): warning C4091: 'typedef ': ignored on left of 'vector3D_f' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(77): warning C4091: 'typedef ': ignored on left of 'vector3D_d' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(82): warning C4091: 'typedef ': ignored on left of 'matrix2D_i' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(87): warning C4091: 'typedef ': ignored on left of 'matrix2D_f' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(92): warning C4091: 'typedef ': ignored on left of 'matrix2D_d' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(98): warning C4091: 'typedef ': ignored on left of 'colorRGB_i' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(104): warning C4091: 'typedef ': ignored on left of 'colorRGB_f' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(110): warning C4091: 'typedef ': ignored on left of 'colorRGB_d' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(117): warning C4091: 'typedef ': ignored on left of 'colorARGB_i' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(124): warning C4091: 'typedef ': ignored on left of 'colorARGB_f' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(131): warning C4091: 'typedef ': ignored on left of 'colorARGB_d' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(139): warning C4091: 'typedef ': ignored on left of 'object3D_i' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(147): warning C4091: 'typedef ': ignored on left of 'object3D_f' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(155): warning C4091: 'typedef ': ignored on left of 'object3D_d' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(2348): warning C4101: 'nof': unreferenced local variable
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(2348): warning C4101: 'nov': unreferenced local variable
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(10): warning C4091: 'typedef ': ignored on left of 'point2D_i' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(15): warning C4091: 'typedef ': ignored on left of 'point2D_f' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(20): warning C4091: 'typedef ': ignored on left of 'point2D_d' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(26): warning C4091: 'typedef ': ignored on left of 'point3D_i' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(32): warning C4091: 'typedef ': ignored on left of 'point3D_f' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(38): warning C4091: 'typedef ': ignored on left of 'point3D_d' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(43): warning C4091: 'typedef ': ignored on left of 'face_t' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(48): warning C4091: 'typedef ': ignored on left of 'vector2D_i' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(53): warning C4091: 'typedef ': ignored on left of 'vector2D_f' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(58): warning C4091: 'typedef ': ignored on left of 'vector2D_d' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(63): warning C4091: 'typedef ': ignored on left of 'vector3D_i' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(68): warning C4091: 'typedef ': ignored on left of 'vector3D_f' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(73): warning C4091: 'typedef ': ignored on left of 'vector3D_d' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(78): warning C4091: 'typedef ': ignored on left of 'matrix2D_i' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(83): warning C4091: 'typedef ': ignored on left of 'matrix2D_f' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(88): warning C4091: 'typedef ': ignored on left of 'matrix2D_d' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(94): warning C4091: 'typedef ': ignored on left of 'colorRGB_i' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(100): warning C4091: 'typedef ': ignored on left of 'colorRGB_f' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(106): warning C4091: 'typedef ': ignored on left of 'colorRGB_d' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(113): warning C4091: 'typedef ': ignored on left of 'colorARGB_i' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(120): warning C4091: 'typedef ': ignored on left of 'colorARGB_f' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(127): warning C4091: 'typedef ': ignored on left of 'colorARGB_d' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(135): warning C4091: 'typedef ': ignored on left of 'object3D_i' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(143): warning C4091: 'typedef ': ignored on left of 'object3D_f' when no variable is declared
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(151): warning C4091: 'typedef ': ignored on left of 'object3D_d' when no variable is declared
   ConsoleApplication1.vcxproj -> D:\Project\ConsoleApplication1\Debug\PrimitiveDrawing.exe
   ConsoleApplication1.vcxproj -> D:\Project\ConsoleApplication1\Debug\PrimitiveDrawing.pdb (Partial PDB)
