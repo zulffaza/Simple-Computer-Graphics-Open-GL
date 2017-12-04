@@ -2198,6 +2198,53 @@ void createGlassWithCover() {
 	drawGradatePolygon(point5, 4, color1);
 }
 
+void MakeKerucut(object3D_f *kerucut, int n, float h, float r) { 
+	float a = 6.28 / n;
+	
+	kerucut->numberOfVertices = n + 1;
+	kerucut->numberOfFaces = n;
+
+	kerucut->point[0].x = 0;
+	kerucut->point[0].y = 0;
+	kerucut->point[0].z = h;
+
+	kerucut->color[0].a = 1;
+	kerucut->color[0].r = 0.5;
+	kerucut->color[0].g = 0;
+	kerucut->color[0].b = 0;
+	
+	for (int i = 1; i <= n; i++) { 
+		kerucut->point[i].x = r * cos(a * i);
+		kerucut->point[i].y = r * sin(a * i);
+		kerucut->point[i].z = 0.;
+
+		kerucut->color[i].a = 1;
+		kerucut->color[i].r = 1;
+		kerucut->color[i].g = 0;
+		kerucut->color[i].b = 0;
+	}
+
+	for (int i = 0; i <= (n - 2); i++) {
+		kerucut->face[i].numberOfVertices = 3;
+
+		kerucut->face[i].point[0] = 0;
+		kerucut->face[i].point[1] = i + 1;
+		kerucut->face[i].point[2] = i + 2;
+	}
+
+	kerucut->face[n - 1].numberOfVertices = 3;
+
+	kerucut->face[n - 1].point[0] = 0;
+	kerucut->face[n - 1].point[1] = n;
+	kerucut->face[n - 1].point[2] = 1;
+
+	kerucut->face[n].numberOfVertices = n;
+
+	for (int i = 0; i < n; i++) {
+		kerucut->face[n].point[i] = i;
+	}
+}
+
 void draw() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glColor3f(0, 0, 0); // Set color of draw
@@ -2276,7 +2323,7 @@ void draw() {
 
 	static float theta = 0;
 	matrix2D_f tilting = matrixXmatrix(rotationMatrixX(theta), rotationMatrixY(theta));
-	tilting = matrixXmatrix(tilting, rotationMatrixZ(15));
+	tilting = matrixXmatrix(tilting, rotationMatrixZ(theta));
 	vector3D_f vector[25000];
 	point2D_f point2D[25000];
 	colorARGB_f colorf[25000];
@@ -2319,21 +2366,7 @@ void draw() {
 	glFlush();
 }
 
-void timer(int value) {
-	glutPostRedisplay();
-	glutTimerFunc(10, timer, 0);
-}
-
-/*
-	Initialize function of window content
-*/
-void initialize() {
-	glClearColor(1, 1, 1, 1); // Clear window content and replace with some color
-	gluOrtho2D(-360, 360, -360, 360); // Create 2D system coordinate
-	//gluOrtho2D(0, 720, -360, 360);
-}
-
-int main(int iArgc, char** cppArgv) {
+int readDataFromFile(char *fileName) {
 	FILE *file;
 	char word[1000];
 
@@ -2344,11 +2377,12 @@ int main(int iArgc, char** cppArgv) {
 	int nos = 0;
 	int now = 0;
 
-	errno_t err = fopen_s(&file, "G:/Materi Semester 5/Grafika Komputer/off14/off14/20.off", "r");
+	errno_t err = fopen_s(&file, fileName, "r");
 
-	if (err != 0)
+	if (err != 0) {
+		isValid = 0;
 		printf("File was not opened\n");
-	else {
+	} else {
 		while (1) {
 			char c = fgetc(file);
 
@@ -2440,7 +2474,8 @@ int main(int iArgc, char** cppArgv) {
 					nos = 0;
 					nol++;
 				}
-			} else {
+			}
+			else {
 				switch (nol) {
 				case 0:
 					printf("%c", c);
@@ -2456,11 +2491,85 @@ int main(int iArgc, char** cppArgv) {
 		fclose(file);
 	}
 
+	return isValid;
+}
+
+int writeDataToFile(char *fileName, object3D_f *object3D) {
+	FILE *file;
+	char word[1000];
+
+	int maxVertices, maxFaces;
+
+	int isValid = 1;
+	int nol = 0;
+	int nos = 0;
+	int now = 0;
+
+	errno_t err = fopen_s(&file, fileName, "w");
+
+	if (err != 0) {
+		isValid = 0;
+		printf("File was not opened\n");
+	} else {
+		fprintf(file, "COFF \n");
+		fprintf(file, "%d %d 0 \n", object3D->numberOfVertices, object3D->numberOfFaces);
+
+		for (int i = 0; i < object3D->numberOfVertices; i++) {
+			int r = object3D->color[i].r * 255;
+			int g = object3D->color[i].g * 255;
+			int b = object3D->color[i].b * 255;
+			int a = object3D->color[i].a * 255;
+
+			fprintf(file, "%f %f %f ", object3D->point[i].x, object3D->point[i].y, object3D->point[i].z);
+			fprintf(file, "%d %d %d %d \n", r, g, b, a);
+		}
+
+		for (int i = 0; i < object3D->numberOfFaces; i++) {
+			fprintf(file, "%d ", object3D->face[i].numberOfVertices);
+
+			for (int j = 0; j < object3D->face[i].numberOfVertices; j++) {
+				fprintf(file, "%d ", object3D->face[i].point[j]);
+			}
+
+			fprintf(file, "\n");
+		}
+
+		fclose(file);
+	}
+
+	return isValid;
+}
+
+void timer(int value) {
+	glutPostRedisplay();
+	glutTimerFunc(10, timer, 0);
+}
+
+/*
+	Initialize function of window content
+*/
+void initialize() {
+	glClearColor(1, 1, 1, 1); // Clear window content and replace with some color
+	gluOrtho2D(-360, 360, -360, 360); // Create 2D system coordinate
+	//gluOrtho2D(0, 720, -360, 360);
+}
+
+int main(int iArgc, char** cppArgv) {
+	//int isValid = readDataFromFile("G:/Materi Semester 5/Grafika Komputer/off14/off14/faza.off");
+
+	MakeKerucut(&obyek3D, 10, 200, 100);
+	
+	int isValid = writeDataToFile("G:/Materi Semester 5/Grafika Komputer/off14/off14/faza.off", &obyek3D);
+
 	if (isValid) {
 		for (int i = 0; i < obyek3D.numberOfVertices; i++) {
-			obyek3D.point[i].x *= 100;
+			/*obyek3D.point[i].x *= 100;
 			obyek3D.point[i].y *= 100;
-			obyek3D.point[i].z *= 100;
+			obyek3D.point[i].z *= 100;*/
+
+			printf("x = %f \t", obyek3D.point[i].x);
+			printf("y = %f \t", obyek3D.point[i].y);
+			printf("z = %f \n", obyek3D.point[i].z);
 		}
 
 		glutInit(&iArgc, cppArgv); // Initialize glut library
