@@ -39,7 +39,7 @@ typedef struct point3D_d {
 
 typedef struct face_t {
 	int numberOfVertices;
-	short int point[32];
+	short int point[25000];
 };
 
 typedef struct vector2D_i
@@ -128,10 +128,10 @@ typedef struct colorARGB_d {
 
 typedef struct object3D_i {
 	int numberOfVertices;
-	point3D_i point[20000];
-	colorARGB_i color[20000];
+	point3D_i point[25000];
+	colorARGB_i color[25000];
 	int numberOfFaces;
-	face_t face[20000];
+	face_t face[25000];
 };
 
 typedef struct object3D_f {
@@ -144,10 +144,10 @@ typedef struct object3D_f {
 
 typedef struct object3D_d {
 	int numberOfVertices;
-	point3D_d point[20000];
-	colorARGB_d color[20000];
+	point3D_d point[25000];
+	colorARGB_d color[25000];
 	int numberOfFaces;
-	face_t face[20000];
+	face_t face[25000];
 };
 
 static object3D_f obyek3D;
@@ -2198,11 +2198,11 @@ void createGlassWithCover() {
 	drawGradatePolygon(point5, 4, color1);
 }
 
-void MakeKerucut(object3D_f *kerucut, int n, float h, float r) { 
+void makeKerucut(object3D_f *kerucut, int n, float h, float r) { 
 	float a = 6.28 / n;
 	
 	kerucut->numberOfVertices = n + 1;
-	kerucut->numberOfFaces = n;
+	kerucut->numberOfFaces = n + 1;
 
 	kerucut->point[0].x = 0;
 	kerucut->point[0].y = 0;
@@ -2213,7 +2213,7 @@ void MakeKerucut(object3D_f *kerucut, int n, float h, float r) {
 	kerucut->color[0].g = 0;
 	kerucut->color[0].b = 0;
 	
-	for (int i = 1; i <= n; i++) { 
+	for (int i = 1; i < kerucut->numberOfVertices; i++) {
 		kerucut->point[i].x = r * cos(a * i);
 		kerucut->point[i].y = r * sin(a * i);
 		kerucut->point[i].z = 0.;
@@ -2224,24 +2224,236 @@ void MakeKerucut(object3D_f *kerucut, int n, float h, float r) {
 		kerucut->color[i].b = 0;
 	}
 
-	for (int i = 0; i <= (n - 2); i++) {
+	for (int i = 0; i < n; i++) {
 		kerucut->face[i].numberOfVertices = 3;
-
 		kerucut->face[i].point[0] = 0;
-		kerucut->face[i].point[1] = i + 1;
-		kerucut->face[i].point[2] = i + 2;
+
+		if (i != (n - 1)) {
+			kerucut->face[i].point[1] = i + 1;
+			kerucut->face[i].point[2] = i + 2;
+		}
+		else {
+			kerucut->face[i].point[1] = n;
+			kerucut->face[i].point[2] = 1;
+		}
 	}
-
-	kerucut->face[n - 1].numberOfVertices = 3;
-
-	kerucut->face[n - 1].point[0] = 0;
-	kerucut->face[n - 1].point[1] = n;
-	kerucut->face[n - 1].point[2] = 1;
 
 	kerucut->face[n].numberOfVertices = n;
 
+	int j = n;
+
 	for (int i = 0; i < n; i++) {
-		kerucut->face[n].point[i] = i;
+		kerucut->face[n].point[i] = j--;
+	}
+}
+
+void makeDiamond(object3D_f *diamond, int n, float h, float r) {
+	float a = 6.28 / n;
+
+	diamond->numberOfVertices = n + 2;
+	diamond->numberOfFaces = (2 * n);
+
+	for (int i = 0; i < 2; i++) {
+		diamond->point[i].x = 0;
+		diamond->point[i].y = 0;
+
+		if (i == 0) {
+			diamond->point[i].z = h;
+		} else if (i == 1) {
+			diamond->point[i].z = -h;
+		}
+
+		diamond->color[i].a = 1;
+		diamond->color[i].r = 0.5;
+		diamond->color[i].g = 0;
+		diamond->color[i].b = 0;
+	}
+
+	for (int i = 2; i < diamond->numberOfVertices; i++) {
+		diamond->point[i].x = r * cos(a * i);
+		diamond->point[i].y = r * sin(a * i);
+		diamond->point[i].z = 0.;
+
+		diamond->color[i].a = 1;
+		diamond->color[i].r = 1;
+		diamond->color[i].g = 0;
+		diamond->color[i].b = 0;
+	}
+
+	for (int i = 0; i < n; i++) {
+		diamond->face[i].numberOfVertices = 3;
+		diamond->face[i].point[0] = 0;
+
+		if (i != (n - 1)) {
+			diamond->face[i].point[1] = i + 2;
+			diamond->face[i].point[2] = i + 3;
+		} else {
+			diamond->face[i].point[1] = (n + 1);
+			diamond->face[i].point[2] = 2;
+		}
+	}
+
+	int j = 0;
+
+	for (int i = n; i < diamond->numberOfFaces; i++) {
+		diamond->face[i].numberOfVertices = 3;
+		diamond->face[i].point[2] = 1;
+
+		if (i != (diamond->numberOfFaces - 1)) {
+			diamond->face[i].point[0] = j + 3;
+			diamond->face[i].point[1] = j + 2;
+		} else {
+			diamond->face[i].point[0] = 2;
+			diamond->face[i].point[1] = (n + 1);
+		}
+
+		j++;
+	}
+}
+
+void makeTabung(object3D_f *tabung, int n, float h, float r) {
+	float a = 6.28 / n;
+
+	tabung->numberOfVertices = (2 * n);
+	tabung->numberOfFaces = n + 2;
+
+	for (int i = 0; i < n; i++) {
+		tabung->point[i].x = r * cos(a * i);
+		tabung->point[i].y = r * sin(a * i);
+		tabung->point[i].z = 0.;
+
+		tabung->color[i].a = 1;
+		tabung->color[i].r = 1;
+		tabung->color[i].g = 0;
+		tabung->color[i].b = 0;
+	}
+
+	int j = 0;
+
+	for (int i = n; i < tabung->numberOfVertices; i++) {
+		tabung->point[i].x = r * cos(a * j);
+		tabung->point[i].y = r * sin(a * j);
+		tabung->point[i].z = h;
+
+		tabung->color[i].a = 1;
+		tabung->color[i].r = 1;
+		tabung->color[i].g = 0;
+		tabung->color[i].b = 0;
+
+		j++;
+	}
+
+	for (int i = 0; i < n; i++) {
+		tabung->face[i].numberOfVertices = 4;
+
+		tabung->face[i].point[0] = i;
+		tabung->face[i].point[3] = i + n;
+
+		if (i != (n - 1)) {
+			tabung->face[i].point[1] = i + 1;
+			tabung->face[i].point[2] = i + (n + 1);
+		}
+		else {
+			tabung->face[i].point[1] = 0;
+			tabung->face[i].point[2] = n;
+		}
+	}
+
+	tabung->face[n].numberOfVertices = n;
+
+	j = (n - 1);
+
+	for (int i = 0; i < n; i++) {
+		tabung->face[n].point[i] = j--;
+	}
+
+	tabung->face[n + 1].numberOfVertices = n;
+
+	j = n;
+
+	for (int i = 0; i < n; i++) {
+		tabung->face[n + 1].point[i] = j++;
+	}
+}
+
+void makePencil(object3D_f *pencil, int n, float h, float r) {
+	float a = 6.28 / n;
+
+	pencil->numberOfVertices = (2 * n) + 1;
+	pencil->numberOfFaces = (2 * n) + 1;
+
+	for (int i = 0; i < n; i++) {
+		pencil->point[i].x = r * cos(a * i);
+		pencil->point[i].y = r * sin(a * i);
+		pencil->point[i].z = 0.;
+
+		pencil->color[i].a = 1;
+		pencil->color[i].r = 1;
+		pencil->color[i].g = 0;
+		pencil->color[i].b = 0;
+	}
+
+	int j = 0;
+
+	for (int i = n; i < (2 * n); i++) {
+		pencil->point[i].x = r * cos(a * j);
+		pencil->point[i].y = r * sin(a * j);
+		pencil->point[i].z = h;
+
+		pencil->color[i].a = 1;
+		pencil->color[i].r = 1;
+		pencil->color[i].g = 0;
+		pencil->color[i].b = 0;
+
+		j++;
+	}
+
+	pencil->point[pencil->numberOfVertices - 1].x = 0;
+	pencil->point[pencil->numberOfVertices - 1].y = 0;
+	pencil->point[pencil->numberOfVertices - 1].z = (2 * h);
+
+	pencil->color[pencil->numberOfVertices - 1].a = 1;
+	pencil->color[pencil->numberOfVertices - 1].r = 0.5;
+	pencil->color[pencil->numberOfVertices - 1].g = 0;
+	pencil->color[pencil->numberOfVertices - 1].b = 0;
+
+	for (int i = 0; i < n; i++) {
+		pencil->face[i].numberOfVertices = 4;
+
+		pencil->face[i].point[0] = i;
+		pencil->face[i].point[3] = i + n;
+
+		if (i != (n - 1)) {
+			pencil->face[i].point[1] = i + 1;
+			pencil->face[i].point[2] = i + (n + 1);
+		}
+		else {
+			pencil->face[i].point[1] = 0;
+			pencil->face[i].point[2] = n;
+		}
+	}
+
+	for (int i = n; i < (2 * n); i++) {
+		pencil->face[i].numberOfVertices = 3;
+
+		pencil->face[i].point[0] = pencil->numberOfVertices - 1;
+
+		if (i != ((2 * n) - 1)) {
+			pencil->face[i].point[1] = i;
+			pencil->face[i].point[2] = i + 1;
+		}
+		else {
+			pencil->face[i].point[1] = i;
+			pencil->face[i].point[2] = n;
+		}
+	}
+
+	pencil->face[pencil->numberOfFaces - 1].numberOfVertices = n;
+
+	j = (n - 1);
+
+	for (int i = 0; i < n; i++) {
+		pencil->face[pencil->numberOfFaces - 1].point[i] = j--;
 	}
 }
 
@@ -2322,7 +2534,7 @@ void draw() {
 	//};
 
 	static float theta = 0;
-	matrix2D_f tilting = matrixXmatrix(rotationMatrixX(theta), rotationMatrixY(theta));
+	matrix2D_f tilting = matrixXmatrix(rotationMatrixX(theta), rotationMatrixY(15));
 	tilting = matrixXmatrix(tilting, rotationMatrixZ(theta));
 	vector3D_f vector[25000];
 	point2D_f point2D[25000];
@@ -2355,9 +2567,9 @@ void draw() {
 				colorf[j] = obyek3D.color[obyek3D.face[i].point[j]];
 			}
 
-			//drawPolygon(point2D, obyek3D.face[i].numberOfVertices);
+			drawPolygon(point2D, obyek3D.face[i].numberOfVertices);
 			//drawFillPolygon(point2D, obyek3D.face[i].numberOfVertices, color3D[i]); 
-			drawGradatePolygon2(point2D, obyek3D.face[i].numberOfVertices, colorf);
+			//drawGradatePolygon2(point2D, obyek3D.face[i].numberOfVertices, colorf);
 		}
 	}
 
@@ -2557,9 +2769,14 @@ void initialize() {
 int main(int iArgc, char** cppArgv) {
 	//int isValid = readDataFromFile("G:/Materi Semester 5/Grafika Komputer/off14/off14/faza.off");
 
-	MakeKerucut(&obyek3D, 10, 200, 100);
+	//makeKerucut(&obyek3D, 100, 200, 100);
+	//makeDiamond(&obyek3D, 1000, 200, 100);
+	makeTabung(&obyek3D, 100, 200, 100);
+	//makePencil(&obyek3D, 60, 150, 100);
 	
-	int isValid = writeDataToFile("G:/Materi Semester 5/Grafika Komputer/off14/off14/faza.off", &obyek3D);
+	//int isValid = writeDataToFile("G:/Materi Semester 5/Grafika Komputer/off14/off14/faza.off", &obyek3D);
+
+	int isValid = 1;
 
 	if (isValid) {
 		for (int i = 0; i < obyek3D.numberOfVertices; i++) {
