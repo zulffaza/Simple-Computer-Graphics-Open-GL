@@ -25,8 +25,8 @@ d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(127): wa
 d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(135): warning C4091: 'typedef ': ignored on left of 'object3D_i' when no variable is declared
 d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(143): warning C4091: 'typedef ': ignored on left of 'object3D_f' when no variable is declared
 d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(151): warning C4091: 'typedef ': ignored on left of 'object3D_d' when no variable is declared
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(2713): warning C4101: 'maxFaces': unreferenced local variable
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(2713): warning C4101: 'maxVertices': unreferenced local variable
-d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(2711): warning C4101: 'word': unreferenced local variable
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(2873): warning C4101: 'maxFaces': unreferenced local variable
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(2873): warning C4101: 'maxVertices': unreferenced local variable
+d:\project\consoleapplication1\consoleapplication1\primitivedrawing.cpp(2871): warning C4101: 'word': unreferenced local variable
   ConsoleApplication1.vcxproj -> D:\Project\ConsoleApplication1\Debug\PrimitiveDrawing.exe
   ConsoleApplication1.vcxproj -> D:\Project\ConsoleApplication1\Debug\PrimitiveDrawing.pdb (Partial PDB)
